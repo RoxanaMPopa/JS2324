@@ -10,26 +10,28 @@ window.addEventListener("DOMContentLoaded", function () {
 });
 
 function diplayMenuItems(menuItems) {
-    //console.log(menuItems);
+    // console.log(menuItems)
     let newArr = [];
     menuItems.forEach((element) => {
         let myElement = `<article class="menu-item">
-        <img src="${element.img}" alt="menu item" class="photo" />
-        <div class="item-info">
+            <img src="${element.img}" alt="menu item" class="photo" />
+            <div class="item-info">
             <header>
                 <h4>${element.title}</h4>
                 <h4 class="price">${element.price} RON</h4>
             </header>
-            <p class="item-text">${element.desc} </p>
-            <p> ${element.category}</p>
-        </div>
-    </article>`
+            <p class="item-text">${element.desc}</p>
+            <p> ${element.category}</p> 
+            </div>
+        </article>`;
         newArr.push(myElement);
     });
-    let myMeniu = newArr.join('');
+    let myMeniu = newArr.join("");
     sectionCenter.innerHTML = myMeniu;
 
-
+    //   menuItems.forEach(function (element) {
+    //     console.log(element);
+    //   });
 }
 
 function displayMenuButtons() {
@@ -41,28 +43,29 @@ function displayMenuButtons() {
             return values;
         },
         ["all"]
-
+        
     );
-    console.log(categories);
-    const categoryBtns = categories.map(function (category, index) {
-        let btn_nr = "btn" + (index + 1);
-        const categoryRo = {
-            all: "Tot",
-            breakfast: "Mic Dejun",
-            lunch: "Pranz",
-            dinner: "Cina",
-            shakes: "Bauturi"
-        };
-        return `<button type="button" class="filter-btn" data-id=${category} data-nr=${btn_nr}>
+    const categoryBtns = categories
+        .map(function (category, index) {
+            let btn_nr = "btn" + (index + 1);
+            const categoryRo = {
+                all: "Tot",
+                breakfast: "Mic Dejun",
+                lunch: "Pranz",
+                dinner: "Cina",
+                shakes: "Bauturi",
+                gustare: "Gustari",
+            };
+            return `<button type="button" class="filter-btn" data-id=${category}  data-nr=${btn_nr}>
         ${categoryRo[category]}
         </button>`;
-    })
+        })
         .join("");
 
     btnContainer.innerHTML = categoryBtns;
     const body = document.querySelector(".menu :not(.filter-btn)");
     body.addEventListener("click", function (e) {
-        displayMenuItems(menu);
+        diplayMenuItems(menu);
     });
 
     const filterBtns = btnContainer.querySelectorAll(".filter-btn");
@@ -78,13 +81,13 @@ function displayMenuButtons() {
             if (category === "all") {
                 diplayMenuItems(menu);
             } else {
-                displayMenuItems(menuCategory);
+                diplayMenuItems(menuCategory);
             }
         });
     });
-
-    function counterClick(btn) {
-        const btnCurrent = document.getElementById(btn.dataset.nr);
-        let contNumber = Number(btnCurrent.textContent)
-        btnCurrent.textContent = contNumber + 1;
-    }
+}
+function counterClick(btn) {
+    const btnCurrent = document.getElementById(btn.dataset.nr);
+    let contNumber = Number(btnCurrent.textContent);
+    btnCurrent.textContent = contNumber + 1;
+}
